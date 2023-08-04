@@ -16,5 +16,4 @@ func GetDatabase() {
 	}
 
 	DB = db
-
 }
