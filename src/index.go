@@ -9,6 +9,8 @@ import (
 )
 
 func main() {
+	GetDatabase()
+
 	ssh.Handle(func(s ssh.Session) {
 		log.Println("new connection")
 		io.WriteString(s, fmt.Sprintf("Hello %s \n", s.User()))
@@ -25,6 +27,11 @@ func main() {
 }
 
 func authHandlerkaas(ctx ssh.Context, key ssh.PublicKey) bool {
-	log.Println(ssh.ParsePublicKey(key))
+	signer, err := ssh.ParsePublicKey(key)
+
+	if err != nil {
+		log.Println("error while parsing ssh key")
+	}
+
 	return true
 }
