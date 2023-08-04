@@ -1,26 +1,16 @@
-package main
+package ssh
 
 import (
 	"fmt"
 	"io"
 	"log"
-	"net/http"
-	"os"
 
+	db "../../pkg/database"
 	"github.com/gliderlabs/ssh"
-	"github.com/tyler-sommer/stick"
 )
 
 func main() {
-
-	http_main()
-	ssh_main()
-
-	log.Println("new connection")
-}
-
-func ssh_main() {
-	GetDatabase()
+	db.GetDatabase()
 
 	ssh.Handle(func(s ssh.Session) {
 		log.Println("new connection")
@@ -34,7 +24,7 @@ func ssh_main() {
 		PublicKeyHandler: authHandlerkaas,
 	}
 
-	go log.Fatal(server.ListenAndServe())
+	log.Fatal(server.ListenAndServe())
 }
 
 func authHandlerkaas(ctx ssh.Context, key ssh.PublicKey) bool {
@@ -46,14 +36,4 @@ func authHandlerkaas(ctx ssh.Context, key ssh.PublicKey) bool {
 	// log.Println("authenticating user with key %s", signer)
 
 	return true
-}
-
-func http_main() {
-	fsRoot, _ := os.Getwd() // Templates are loaded relative to this directory.
-
-	env := stick.New(stick.NewFilesystemLoader(fsRoot))
-	http.HandleFunc("/bar", func(w http.ResponseWriter, r *http.Request) {
-		env.Execute("bar.html.twig", w, nil) // Loads "bar.html.twig" relative to fsRoot.
-	})
-	go log.Fatal(http.ListenAndServe(":8080", nil))
 }
