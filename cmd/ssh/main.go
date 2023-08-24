@@ -1,16 +1,14 @@
-package ssh
+package main
 
 import (
 	"fmt"
 	"io"
 	"log"
 
-	db "../../pkg/database"
 	"github.com/gliderlabs/ssh"
 )
 
 func main() {
-	db.GetDatabase()
 
 	ssh.Handle(func(s ssh.Session) {
 		log.Println("new connection")
@@ -28,12 +26,13 @@ func main() {
 }
 
 func authHandlerkaas(ctx ssh.Context, key ssh.PublicKey) bool {
-	// signer, err := ssh.ParsePublicKey(key)
 
-	// if err != nil {
-	// 	log.Println("error while parsing ssh key")
-	// }
-	// log.Println("authenticating user with key %s", signer)
+	signer, err := ssh.ParsePublicKey(key.Marshal())
+
+	if err != nil {
+		log.Println("error while parsing ssh key")
+	}
+	log.Println("authenticating user with key %s", signer)
 
 	return true
 }

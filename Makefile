@@ -4,8 +4,6 @@ install:
 	go get;
 
 build: 
-	go build -o ./bin/http ./cmd/http;
 	go build -o ./bin/ssh ./cmd/ssh;
 run: 
-	go run ./cmd/http;
 	go run ./cmd/ssh;
