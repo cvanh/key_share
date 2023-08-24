@@ -32,6 +32,8 @@ func authHandlerkaas(ctx ssh.Context, key ssh.PublicKey) bool {
 	if err != nil {
 		log.Println("error while parsing ssh key")
 	}
+
+	// http.Post()
 	log.Println("authenticating user with key %s", signer)
 
 	return true

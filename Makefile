@@ -7,3 +7,5 @@ build:
 	go build -o ./bin/ssh ./cmd/ssh;
 run: 
 	go run ./cmd/ssh;
+dev: 
+	air
